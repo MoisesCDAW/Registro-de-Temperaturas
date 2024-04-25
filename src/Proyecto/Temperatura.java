@@ -31,7 +31,7 @@ public class Temperatura implements Serializable{
     /**
      * Constructor
      * Se pide una temperatura y se le asigna por defecto la hora del sistema con now() de la clase LocalDate
-     * @param temperatura
+     * @param temperatura con valor entero en ºC
      */
     public Temperatura(int temperatura){
         this.fecha = LocalDateTime.now();
@@ -98,7 +98,7 @@ public class Temperatura implements Serializable{
     
     /**
      * Compara la igualdad de dos objetos del mismo tipo
-     * @param t
+     * @param t objecto de tipo Temperatura
      * @return True o False si los objetos comparados son iguales
      */
     @Override
@@ -110,7 +110,7 @@ public class Temperatura implements Serializable{
     
     /**
      * Dedicado a agregar una nueva temperatura al histórico
-     * @param temperatura 
+     * @param temperatura con valor entero en ºC
      */
     public static void addTemperatura(Temperatura temperatura){
         historico.add(temperatura);
@@ -142,7 +142,7 @@ public class Temperatura implements Serializable{
 
     /**
      * Atributo histórico que almacena temperaturas y las fechas en las que fueron tomadas
-     * Se implementa Collection -> Set -> TreeSet, a modo de conjunto de datos ya que estos no se pueden repetir
+     * Se implementa Collection - Set - TreeSet, a modo de conjunto de datos ya que estos no se pueden repetir
      * y se busca solo el orden de entrada
      * @return the historico
      */
