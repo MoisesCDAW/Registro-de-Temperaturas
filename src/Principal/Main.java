@@ -3,6 +3,8 @@ package Principal;
 
 import Proyecto.ComparaTemp;
 import Proyecto.Temperatura;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,6 +30,13 @@ public class Main {
         
         Temperatura.getHistorico().sort(new ComparaTemp());
         System.out.println(Temperatura.getHistorico());
+        
+        Temperatura.guardarHistorico(Temperatura.getHistorico());
+        
+        List<Temperatura> otro = new ArrayList<>();
+        otro = Temperatura.leerHistorico("C:\\Users\\moise\\Downloads\\historicoTemps.dat", otro);
+        
+        System.out.println(otro);
     }
     
     
