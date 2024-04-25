@@ -1,6 +1,10 @@
 
 package Proyecto;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,7 +45,27 @@ public class Temperatura implements Serializable{
     // Métodos
     
     /**
-     * @return Cadeta de texto que muestra información sobre el objeto
+     * Para guardar el histórico en un fichero binario. El fichero se guarda en la carpeta "Downloads" del equipo
+     * y se agrega como cabecera la fecha en que se hizo el último guardado
+     * @param histoT colección de objetos Temperatura
+     */
+    public static void guardarHistorico(List<Temperatura> histoT){
+        String fechaGuardado = String.valueOf(LocalDateTime.now());
+        
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("C:\\Users\\moise\\Downloads\\históricoTemps.dat"))){
+            out.writeObject(fechaGuardado);
+            out.writeObject(histoT);
+            System.out.println("\nHistórico guardado correctamente.\n");
+ 
+        } catch (FileNotFoundException ex) {
+            System.out.println("Archivo no encontrado.");
+        }catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    /**
+     * @return Cadena de texto que muestra información sobre el objeto
      */
     @Override           
     public String toString(){
