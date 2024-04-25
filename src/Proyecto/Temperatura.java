@@ -1,9 +1,12 @@
 
 package Proyecto;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -52,8 +55,8 @@ public class Temperatura implements Serializable{
     public static void guardarHistorico(List<Temperatura> histoT){
         String fechaGuardado = String.valueOf(LocalDateTime.now());
         
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("C:\\Users\\moise\\Downloads\\históricoTemps.dat"))){
-            out.writeObject(fechaGuardado);
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("C:\\Users\\moise\\Downloads\\historicoTemps.dat"))){
+//            out.writeObject(fechaGuardado);
             out.writeObject(histoT);
             System.out.println("\nHistórico guardado correctamente.\n");
  
@@ -65,6 +68,34 @@ public class Temperatura implements Serializable{
     }
     
     /**
+     * 
+     * @param rutaFichero pasado en formato String: "C:\\raiz\\usuario\\origen\\fichero.dat"
+     * @param HistoT colección donde se guardará el histórico que se leerá
+     * @return colección del histórico
+     */
+    public static List<Temperatura> leerHistorico(String rutaFichero, List<Temperatura> HistoT){
+        
+        try (ObjectInputStream input = new ObjectInputStream( new FileInputStream(rutaFichero))){
+            while (true) {
+                HistoT = (List<Temperatura>) input.readObject();
+            }
+        
+        } catch (EOFException ex) {
+            System.out.println("Fin de la lectura.\n");
+        }
+        catch (FileNotFoundException | ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+        
+        return HistoT;
+    
+    }
+    
+    /**
+     * Método capaz de leer y guardar el histórico de un fichero binario externo dentro de nuestro programa
      * @return Cadena de texto que muestra información sobre el objeto
      */
     @Override           
@@ -125,7 +156,5 @@ public class Temperatura implements Serializable{
     public static List<Temperatura> getHistorico() {
         return historico;
     }
-
-    
-    
+ 
 }
